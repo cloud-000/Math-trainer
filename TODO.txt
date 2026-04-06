@@ -1,0 +1,50 @@
+Core:
+- Filter by metadata
+- User Stats
+    - ELO
+    - Problem SpreadSheet / Stats
+        EACH Series/Test
+        Problem Data
+            - Attempts
+                - Time Taken
+                - Personal Confidence rating
+                - Date
+            - Status
+                - Not Attempted, Solving, Solved, Reviewing, Skipped, Ignored
+    - Suggest Review Problems
+        - Planed
+        - Random
+- ELO difficulty
+- Problem Generator
+    - Custom settings
+- Hint system
+
+
+Extra Features:
+- Problem Quality System
+- Mock Contest Integration
+    - Contest Simulation (Timer)
+    - Premade formats
+        - AMC
+        - MC sprint, CD round, Target, Team, etc
+- Mathcounts Countdown Simulation (FTW esque)
+
+- Problem Search
+    - Metadata
+        - type (ACGN)
+        - Contest
+        - Quality
+        - Difficulty
+    - Advanced querying
+
+
+Far Future Ideas
+
+- Organization structure
+    - RBAC systems
+    - Forums, Classroom
+    - Monetization
+    - ThinkAcademy-like platform
+- Tablet/Kindle Modes
+- Whiteboard
+- More than math

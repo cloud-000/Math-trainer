@@ -1,0 +1,50 @@
+data class RootContest (
+    var name: String,
+    var id: String,
+    var data: List<ProblemTest>
+)
+
+data class ProblemTest (
+    val id: Int,
+    val year: String,
+    val version: String,
+
+    @SerialName("AoPs_Forum")
+    val aoPSForum: String,
+
+    val problems: List<Problem>
+)
+
+data class Problem (
+    @SerialName("contest_id")
+    val contestID: String,
+
+    @SerialName("test_id")
+    val testID: Int,
+
+    val number: Int,
+    val statement: String,
+
+    @SerialName("AoPs_Forum")
+    val aoPSForum: String,
+
+    @SerialName("AoPs_Wiki")
+    val aoPSWiki: String,
+
+    @SerialName("is_duplicate")
+    val isDuplicate: Boolean,
+    val refers: String,
+
+    var hasAnswer: Boolean,
+    var answerVerified: Boolean,
+
+    val answers: List<String>,
+    val answer: Int,
+    val solutions: List<String>,
+
+    val redirect: String,
+    val category: Int,
+    val rating: Int,
+    val quality: Int,
+    val tags: List<String>
+)

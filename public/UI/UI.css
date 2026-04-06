@@ -1,0 +1,74 @@
+@import url("https://fonts.cdnfonts.com/css/sf-pro-display");
+
+:root {
+    --c-bg: black;
+    --c-bg-m: black;
+    --c-text: black;
+    --c-text2: black;
+    --c-bd: black;
+    --c-shadow: black;
+    --c-accent: black;
+    --c-accent-bg: black;
+    --text-size: 20px;
+    --bd-size: 2px;
+    --n-shadow: 0 4px 4px -4px var(--c-shadow);
+    --h-shadow: 0 6px 6px -4px var(--c-shadow);
+    --font: "SF Pro Display";
+    font-family: var(--font), serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    font-size: var(--text-size);
+    box-sizing: border-box;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+}
+
+.flex {display: flex; flex-direction: row; align-items: center; justify-content: center;}
+
+.expand {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
+.material-symbols-rounded {
+    font-size: inherit !important;
+    --fill: 0;
+    --weight: 400;
+    --grad: 0;
+    --opsz: 0;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    font-variation-settings: 'FILL' var(--fill), 'wght' var(--weight), 'GRAD' var(--grad), 'opsz' var(--opsz);
+}
+
+#cloud-ui-custom-elements {
+    display: none;
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%;
+    height: 0;
+    &[shown] {
+        display: block
+    }
+}

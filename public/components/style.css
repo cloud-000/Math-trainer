@@ -1,0 +1,113 @@
+.cloud-ui-nav-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.cloud-ui-nav-container {
+    position: relative;
+    border-right: var(--bd-size) solid var(--c-bd);
+    flex-direction: column;
+    overflow: hidden;
+
+    padding-left: 8px;
+    padding-right: 1.5rem;
+    padding-top: 8px;
+
+    & > .flex {
+        flex-direction: column;
+        justify-content: flex-start;
+        /*box-sizing: border-box;*/
+    }
+}
+
+.cloud-ui-nav-buttons {
+    margin-top: 32px;
+    width: 0;
+    z-index: 1;
+    position: absolute;
+}
+
+.cloud-ui-input-tagify {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    box-sizing: border-box;
+    height: fit-content;
+    padding: 4px;
+    /*padding: 0 8px;*/
+    background-color: var(--c-bg);
+    border: 2px solid var(--c-bd);
+}
+
+.cloud-ui-tagify-input {
+    position: relative;
+    display: inline-block;
+    min-width: 0;
+    line-height: inherit;
+    height: fit-content;
+    box-sizing: border-box;
+    padding: 2px;
+    margin: 0 5px;
+    white-space: nowrap;
+    flex-grow: 1;
+    & br {
+        display: none;
+    }
+    &::before {
+        position: absolute;
+        display: inline-block;
+        content: attr(data-placeholder);
+        margin: auto 0;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    &:not(:focus):empty::before {
+        opacity: 0.5;
+    }
+}
+
+.cloud-ui-tagify-tag {
+    background-color: var(--c-bg-m);
+    color: var(--c-text2);
+    border-radius: 8px var(--text-size) var(--text-size) 8px;
+    border: var(--bd-size) solid color-mix(in srgb, var(--c-accent) 0%, transparent);
+    position: relative;
+    width: fit-content;
+    padding: 6px calc(var(--text-size) * 0.5);
+    gap: var(--text-size);
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    &:hover {
+        background-color: var(--c-accent-bg);
+        color: var(--c-accent);
+        border-color: color-mix(in srgb, var(--c-accent) 50%, transparent);
+        & > .cloud-ui-tagify-remove {
+            color: var(--c-accent);
+        }
+    }
+}
+
+.cloud-ui-tagify-remove {
+    position: relative;
+    color: var(--c-text2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    font-size: calc(var(--text-size) - 2px);
+    &:hover {
+        opacity: 1;
+    }
+    &::before {
+        display: block;
+    }
+}

@@ -1,0 +1,17 @@
+.cloud-ui-spa-wrapper {
+
+}
+
+.cloud-ui-spa-content-wrapper {
+    flex-direction: column;
+}
+
+.cloud-ui-spa-page {
+    flex-direction: column;
+}
+
+.cloud-ui-spa-side-element {
+    &[cloud-ui-visible="false"] {
+        display: none !important;
+    }
+}
