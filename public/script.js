@@ -25,7 +25,8 @@ async function main() {
         "Stats.js",
         "Trainer.js",
         "Settings.js",
-        "App.js"
+        "App.js",
+        "style.css"
     ], "./Pages/")
 
     const app = new App()

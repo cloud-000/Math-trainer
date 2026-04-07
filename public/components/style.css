@@ -34,6 +34,7 @@
     display: flex;
     flex-wrap: nowrap;
     overflow-x: scroll;
+    scrollbar-width: thin;
     box-sizing: border-box;
     height: 100%;
 }
@@ -134,6 +135,9 @@
     max-height: 200px;
 
     overflow-y: auto;
+    overscroll-behavior: contain;
+    overscroll-behavior-block: contain;
+    overscroll-behavior-inline: contain;
     display: none;
 
     z-index: 3;

@@ -1,0 +1,8 @@
+.filter-search-head {
+    height: fit-content;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 1rem;
+    background-color: var(--c-bg-m);
+    border-bottom: var(--bd-size) solid var(--c-bd);
+}

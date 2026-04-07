@@ -37,15 +37,8 @@ UI.register("input-tagify", `
         const inputValue = textBox.innerText.trim().toLowerCase()
         dropdownList.innerHTML = ""
 
-        if (inputValue.length === 0) {
-            showDropdown(options)
-            // dropdownWrapper.classList.remove("active")
-            return
-        }
-
-        // Filter options that match the current input
         const filteredOptions = options.filter(opt =>
-            opt.toLowerCase().includes(inputValue)
+            opt.toLowerCase().includes(inputValue) && !tags.includes(opt)
         )
         if (filteredOptions.length === 0) {
             dropdownWrapper.classList.remove("active")
@@ -57,7 +50,6 @@ UI.register("input-tagify", `
     function showDropdown(filteredOptions) {
         filteredOptions.forEach(option => {
             const listItem = UI.element("li", {"class": "cloud-ui-dropdown-item"}, {textContent: option})
-            // listItem.textContent = option
 
             listItem.addEventListener("click", () => {
                 textBox.innerText =""
@@ -71,14 +63,14 @@ UI.register("input-tagify", `
                 selection.removeAllRanges()
                 selection.addRange(range)
                 let hasTag = container.hasTag(option)
+                if (!hasTag) {
+                    container.addTag(option)
+                }
                 element.dispatchEvent(new CustomEvent("value-set", {
                     detail: {value: option, isOption: true, noChange: hasTag},
                     bubbles: false,
                     cancelable: true
                 }))
-                if (!hasTag) {
-                    container.addTag(option)
-                }
             })
 
             listItem.addEventListener("mouseenter", () => {
@@ -93,10 +85,6 @@ UI.register("input-tagify", `
         dropdownWrapper.classList.add("active")
         dropdownWrapper.style.setProperty("width", element.offsetWidth + "px")
         dropdownWrapper.style.setProperty("top", element.offsetHeight + "px")
-        /*UI.setAttributes(dropdownWrapper, {
-            "width": element.offsetWidth + "px",
-            // "top": element.offsetHeight + "px"
-        })*/
     }
 
     container.hasTag = (tag) => {
@@ -240,13 +228,13 @@ UI.register("input-tagify", `
         updateDropdown()
     })
 
-    textBox.addEventListener("blur", () => {
+    textBox.addEventListener("blur", (e) => {
         // Delay closing to allow click on dropdown item
         setTimeout(() => {
             // if (!dropdownWrapper.querySelector(".cloud-ui-dropdown-item:hover")) {
             dropdownWrapper.classList.remove("active")
             // }
-        }, 120)
+        }, 180)
     })
 
     // Close dropdown when clicking outside

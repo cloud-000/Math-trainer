@@ -2,9 +2,21 @@ UI.dependencies([
     "button.css"
 ])
 UI.register("button", `
-<button class="button flex" style-type="default">@param(text)</button>
+<button class="button flex" style-type="@param(styleType)"><span>@param(text)</span>
+</button>
 <!--<button class="button flex" style-type="nav"></button>-->
-`, {text: "Try modifying @param(text) to change this text"})
+`, {
+    text: "Try modifying @param(text) to change this text",
+    styleType: "default"
+    },
+    (element, params) => {
+    if (Object.hasOwn(params, "icon")) {
+        if ((params.text ?? "").trim() === "") {
+            UI.getChild(element, [0]).remove()
+        }
+        UI.add(element, UI.component("icon", {text: params.icon}), 0)
+    }
+})
 
 UI.register("button-nav", `
 <button class="button flex" style-type="nav">
@@ -25,12 +37,4 @@ UI.register("button-link-nav", `
     text: "I am an redirect?",
     icon: "link",
     href: "/testing"
-})
-
-UI.register("button-icon", `
-<button class="button flex" style-type="act" only-icon>
-    <icon class="material-symbols-rounded">@param(icon)</icon>
-</button>
-`, {
-    icon: "heart_plus"
 })

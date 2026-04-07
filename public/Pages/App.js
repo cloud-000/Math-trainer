@@ -7,10 +7,7 @@ class App extends SpaApp {
         // this.contentElement.remove()
         this.addSideElement("nav-bar", UI.component("nav-bar"), this.element, 0)
         // UI.add(this.element, UI.element("div", {class: "flex expand", style: "flex-direction: column"}))
-        this.addSideElement("filters", UI.element("div", {
-            "class": "flex expand",
-            "style": "height: fit-content; flex-wrap: wrap; gap: 6px"
-        }),
+        this.addSideElement("filters", UI.element("div", {"class": "flex expand filter-search-head",}),
             UI.getChild(this.element, [1])
         )
 
@@ -21,7 +18,6 @@ class App extends SpaApp {
                 { text: "Test", onclick: () => this.setSwitch1(mockTypeChoices, 2) },
             ]
         })
-        UI.add(document.body, switch1)
         let acgnChoices = UI.component("input-tagify", {
             options: ["A", "C", "G", "N", "Other"],
             placeholder: "Select (ACGN) or Other"
@@ -30,20 +26,20 @@ class App extends SpaApp {
             options: Object.keys(TYPES),
             placeholder: "Select Mock Type"
         }, {}, {}, (e) => {
-            UI.add(e, UI.component("button-icon", {icon: "more_vert"}, {"style-type": "act"}, {
+            UI.add(e, UI.component("button", {text: null, icon: "more_vert", styleType: "act"}, {}, {
                 onclick: (e) => {
                     e.preventDefault()
                     setTimeout(() => switch1.open(e.clientX, e.clientY), 10);
                 }
             }), 0)
         })
-        UI.add(this.getSideElement("filters"), acgnChoices, 0)
-        UI.add(this.getSideElement("filters"), mockTypeChoices, 0)
-        UI.add(this.getSideElement("filters"), UI.component("button", {text: "Search!"}, {}, {
-            onclick: async () => {
-
-            }
-        }))
+        let tagChoices = UI.component("input-tagify", {
+            options: ["To be implemented..."],
+            placeholder: "Tags yet to be made"
+        })
+        UI.add(this.getSideElement("filters"), mockTypeChoices)
+        UI.add(this.getSideElement("filters"), acgnChoices)
+        UI.add(this.getSideElement("filters"), tagChoices)
 
         this.setSwitch1(mockTypeChoices, 0)
 
@@ -61,6 +57,7 @@ class App extends SpaApp {
 
         this.setRoutes( "/", ["index.html"])
 
+        UI.add(document.body, switch1)
     }
 
     // Supabase
@@ -95,7 +92,7 @@ class App extends SpaApp {
                 break
             case 2:
                 dropdown.renamePlaceholder("Select Test")
-                dropdown.setOptions(["Sigmoid", "Xoinkity"], false)
+                dropdown.setOptions(["Why did commit that... :("], false)
                 break;
 
         }
