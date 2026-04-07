@@ -36,10 +36,41 @@ class App extends SpaApp {
         let tagChoices = UI.component("input-tagify", {
             options: ["To be implemented..."],
             placeholder: "Tags yet to be made"
-        })
+        }, {"style": "flex-basis: 100%"})
         UI.add(this.getSideElement("filters"), mockTypeChoices)
         UI.add(this.getSideElement("filters"), acgnChoices)
         UI.add(this.getSideElement("filters"), tagChoices)
+        UI.add(this.getSideElement("filters"), UI.component("labeled-range", {
+            text: "Year",
+            min: 1974,
+            max: 2026,
+            step: 1,
+            lowerValue: 2000,
+            upperValue: 2020,
+            labelInterval: 12,
+            tickInterval: 3,
+        }, {"style": "flex-basis: 400px"}))
+        UI.add(this.getSideElement("filters"), UI.component("labeled-range", {
+            text: "Elo (Not Implemented)",
+            min: 0,
+            max: 10,
+            step: 0.5,
+            lowerValue: 2,
+            upperValue: 5,
+            labelInterval: 2.5,
+            tickInterval: 0.5,
+        }, {"style": "flex-basis: 400px"}))
+        UI.add(this.getSideElement("filters"), UI.component("labeled-range", {
+            text: "Quality (Not Implemented)",
+            min: 0,
+            max: 10,
+            step: 1,
+            lowerValue: 2,
+            upperValue: 5,
+            labelInterval: 2,
+            tickInterval: 1,
+        }, {"style": "flex-basis: 400px"}))
+
 
         this.setSwitch1(mockTypeChoices, 0)
 

@@ -1,0 +1,164 @@
+.cloud-ui-range-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.cloud-ui-range-label {
+
+}
+
+.range-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    padding-top: 2px;
+    padding-bottom: calc(var(--cloud-ui-height) + var(--cloud-ui-label-height) + var(--cloud-ui-tick-height) + 2px);
+    --cloud-ui-tick-height: 7px;
+    --cloud-ui-label-height: 10px;
+    --cloud-ui-height: 10px;
+}
+
+.range-inputs {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--cloud-ui-height);
+    margin: 0 calc(var(--text-size)*0.5);
+    --lower-percent: 25%;
+    --upper-percent: 75%;
+}
+
+.range-slider {
+    position: absolute;
+    width: 100%;
+    height: var(--cloud-ui-height);
+    background: transparent;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Hide native track */
+.range-slider::-webkit-slider-runnable-track {
+    background: transparent;
+    height: var(--cloud-ui-height);
+    border-radius: 3px;
+    border: none;
+}
+
+.range-slider {
+    background: transparent;
+    height: var(--cloud-ui-height);
+    border-radius: 3px;
+    border: none;
+}
+
+.range-slider::-moz-range-progress {
+    background: transparent;
+}
+
+/* Custom track background - behind the inputs */
+.range-inputs::before {
+    content: "";
+    position: absolute;
+
+    left: calc(var(--text-size)*0.5);
+    right: calc(var(--text-size)*0.5);
+
+    height: var(--cloud-ui-height);
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--c-bd);
+    border-radius: 3px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Custom track fill - the accent colored portion */
+.range-inputs::after {
+    content: "";
+    position: absolute;
+    left: calc( var(--lower-percent) + 3px);
+    width: calc((var(--upper-percent) - var(--lower-percent)) - 5px);
+    height: calc(var(--text-size)*0.5);
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--c-accent-bg);
+    border: var(--bd-size) solid color-mix(in srgb, var(--c-accent), transparent);
+    border-right: none;
+    border-left: none;
+    border-radius: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Make slider thumb area clickable */
+.range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: auto;
+
+    width: calc(var(--text-size)*0.5 + var(--cloud-ui-height));
+    aspect-ratio: 1;
+    transform: translate(0, -50%);
+    margin-top: calc(var(--cloud-ui-height)*0.5);
+
+    border-radius: 50%;
+    background-color: color-mix(in srgb, var(--c-accent-bg) 70%, var(--c-accent));
+    border: var(--bd-size) solid var(--c-accent);
+    cursor: pointer;
+
+    transition: background-color 0.1s ease-in-out;
+
+    z-index: 3;
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+    background-color: color-mix(in srgb, var(--c-accent-bg) 40%, var(--c-accent));
+}
+
+.range-slider::-moz-range-thumb:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Z-index so upper thumb appears on top */
+.range-upper {
+    z-index: 4;
+}
+
+.range-lower {
+    z-index: 3;
+}
+
+/* Labels and tick marks */
+.range-labels {
+    position: relative;
+    top: 0;
+    height: 0;
+    margin: 0 var(--text-size);
+}
+
+.range-tick {
+    position: absolute;
+    width: 2px;
+    height: var(--cloud-ui-tick-height);
+    background-color: var(--c-bd);
+    transform: translateX(-50%);
+}
+
+.range-tick.range-label-tick {
+    height: var(--cloud-ui-label-height);
+}
+
+.range-label {
+    position: absolute;
+
+    top: calc(var(--cloud-ui-label-height) + 2px);
+    transform: translateX(-50%);
+    font-size: calc(var(--text-size)*0.75 - 2px);
+    color: var(--c-text);
+    white-space: nowrap;
+}

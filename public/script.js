@@ -9,6 +9,7 @@ async function main() {
         "navbar.js",
         "inputFilter.js",
         "popupMenu.js",
+        "range.js"
     ], "./components/")
     await UI.loadScripts([
         "ManageState.js",
