@@ -1,4 +1,4 @@
-export const TYPES = {
+const TYPES = {
     OMMC: {id: -1, computational: true, name: "OMMC", choices: false},
     AMC: {id: 0, computational: true, name: "AMC", choices: true},
     AIME: {id: 1, computational: true, name: "AIME", choices: false},
@@ -9,7 +9,7 @@ export const TYPES = {
     UNKNOWN: {id: 99, computational: null, name: null}
 }
 
-export const CONTEST_IDS = {
+const CONTEST_IDS = {
     "IGNORE": [
         4491998, // para made OMMC collection
         4479828,

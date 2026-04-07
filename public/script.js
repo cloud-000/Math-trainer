@@ -37,6 +37,7 @@ async function main() {
     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
     await checkAuth(supabaseClient)
+    app.signIn(supabaseClient)
     /*let { data, error } = await supabaseClient
         .from("Problems")
         .select()

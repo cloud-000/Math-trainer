@@ -92,7 +92,7 @@ UI.compose = (l, params={}) => {
         l.childs.forEach(c => e.appendChild(UI.compose(c, params)))
     }
     if (l.onReady) {
-        l.onReady.call(null, e)
+        l.onReady.call(null, e, params)
     }
     return e
 }
@@ -104,14 +104,42 @@ function replaceWithParams(text, params) {
 /**
  * Add child to parent
  * @param{HTMLElement} parent
- * @param{HTMLElement} child
- * @param{number} index
+ * @param{HTMLElement|HTMLElement[]} child
+ * @param{number|number[]} index
  * */
 UI.add = (parent, child, index=parent.children.length) => {
+
+    if (typeof index !== "number") {
+
+        if (index.length > 1) {
+            UI.add(parent.children[index[0]], child, index.slice(0, -1))
+            return;
+        } else {
+            if (index.length === 1) {
+                index = index[0]
+            } else {
+                return
+            }
+        }
+    }
     if (index >= parent.children.length) {
-        parent.appendChild(child)
+        if (Array.isArray(child)) {
+            for (let c of child) {
+                parent.appendChild(c)
+            }
+        } else {
+            parent.appendChild(child)
+        }
     } else {
-        parent.insertBefore(child, parent.children[index])
+        if (Array.isArray(child)) {
+            let reference = parent.children[index]
+            for (let c of child) {
+                parent.insertBefore(c, reference)
+            }
+        } else {
+            parent.insertBefore(child, parent.children[index])
+        }
+
     }
 }
 

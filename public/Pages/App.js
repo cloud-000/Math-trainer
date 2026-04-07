@@ -7,8 +7,32 @@ class App extends SpaApp {
         // this.contentElement.remove()
         this.addSideElement("nav-bar", UI.component("nav-bar"), this.element, 0)
         // UI.add(this.element, UI.element("div", {class: "flex expand", style: "flex-direction: column"}))
-        this.addSideElement("filters", UI.component("input-tagify"), UI.getChild(this.element, [1]))
-        UI.add(this.getSideElement("filters"), UI.component("tagify-tag"), 0)
+        this.addSideElement("filters", UI.element("div", {
+            "class": "flex expand",
+            "style": "height: fit-content; flex-wrap: wrap; gap: 6px"
+        }),
+            UI.getChild(this.element, [1])
+        )
+
+        let acgnChoices = UI.component("input-tagify", {
+            options: ["A", "C", "G", "N", "Other"],
+            placeholder: "Select (ACGN) or Other"
+        })
+        let mockTypeChoices = UI.component("input-tagify", {
+            options: Object.keys(TYPES),
+            placeholder: "Select Mock Type"
+        })
+        UI.add(this.getSideElement("filters"), acgnChoices, 0)
+        UI.add(this.getSideElement("filters"), mockTypeChoices, 0)
+        UI.add(this.getSideElement("filters"), UI.component("button", {text: "Search!"}, {}, {
+            onclick: async () => {
+
+            }
+        }))
+        // this.getSideElement("filters")
+
+            // .addTag(UI.component("tagify-tag"))
+
         // console.log(UI.getChild(this.getSideElement("nav-bar"), [0, 0]))
         this.addPage({
             text: "Home",
@@ -25,9 +49,11 @@ class App extends SpaApp {
         this.setRoutes( "/", ["index.html"])
     }
 
-    signIn() {
-
+    // Supabase
+    signIn(client) {
+        this.client = client
     }
+
 
     addPage(params, state) {
         super.createState(params["href"], state)
