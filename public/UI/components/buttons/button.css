@@ -30,6 +30,7 @@
     border: var(--bd-size) solid transparent;
     color: var(--c-text2);
     transition: background-color 0.2s ease-out, color 0.2s ease-in;
+
     &:hover {
         color: var(--c-text);
         background-color: var(--c-bg-m);
@@ -56,6 +57,10 @@
             --fill: 1;
         }
     }
+}
+
+.button[only-icon] {
+    padding: 4px;
 }
 
 a.button {

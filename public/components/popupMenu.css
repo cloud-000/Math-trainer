@@ -1,0 +1,126 @@
+/* Popup Menu Styles */
+.cloud-ui-popup-menu {
+    position: fixed;
+    background-color: var(--c-bg);
+    border: 2px solid var(--c-bd);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 4px 0;
+    min-width: 200px;
+    z-index: 10000;
+    display: none;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.cloud-ui-popup-menu.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cloud-ui-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cloud-ui-menu-item {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cloud-ui-menu-item-content {
+    padding: 10px 16px;
+    cursor: pointer;
+    color: var(--c-text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    white-space: nowrap;
+    user-select: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.cloud-ui-menu-item-content:hover {
+    background-color: var(--c-bg-m);
+    color: var(--c-accent);
+}
+
+.cloud-ui-menu-item-content.has-submenu {
+    justify-content: space-between;
+}
+
+.cloud-ui-menu-arrow {
+    font-size: 18px;
+    font-weight: bold;
+    opacity: 0.6;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.cloud-ui-submenu-wrapper {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 2px;
+    z-index: 10001;
+}
+
+.cloud-ui-submenu-wrapper.measuring {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.cloud-ui-submenu-wrapper.left {
+    left: auto;
+    right: 100%;
+    margin-left: 0;
+    margin-right: 2px;
+}
+
+.cloud-ui-submenu-wrapper.top {
+    top: auto;
+    bottom: 0;
+}
+
+.cloud-ui-submenu-list {
+    background-color: var(--c-bg);
+    border: 2px solid var(--c-bd);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 4px 0;
+    min-width: 200px;
+    opacity: 0;
+    transform: translateX(-8px);
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.cloud-ui-menu-item.active > .cloud-ui-submenu-wrapper > .cloud-ui-submenu-list {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+}
+
+.cloud-ui-submenu-wrapper.left > .cloud-ui-submenu-list {
+    transform: translateX(8px);
+}
+
+.cloud-ui-submenu-wrapper.left .cloud-ui-menu-item.active > .cloud-ui-submenu-wrapper > .cloud-ui-submenu-list {
+    transform: translateX(0);
+}
+
+.cloud-ui-submenu-list .cloud-ui-menu-item-content {
+    padding: 10px 16px;
+}
+
+.cloud-ui-submenu-list .cloud-ui-menu-item-content:hover {
+    background-color: var(--c-bg-m);
+    color: var(--c-accent);
+}

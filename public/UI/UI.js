@@ -27,14 +27,16 @@ class UI{
  * @param params
  * @param{Object} htmlProps
  * @param{Object} jsProps
+ * @param{Function?} onReady
  * @returns {HTMLElement}
  */
-UI.component = (name, params={}, htmlProps={}, jsProps={}) => {
+UI.component = (name, params={}, htmlProps={}, jsProps={}, onReady=null) => {
     let finalParams = Object.assign({}, UI.c[name].parameters ?? {}, params)
     let e = UI.compose(UI.c[name], finalParams)
     finalParams = null
     UI.setAttributes(e, htmlProps)
     UI.setOtherAttrs(e, jsProps)
+    onReady?.call(null, e, params)
     return e
 }
 

@@ -25,6 +25,7 @@ UI.register("input-tagify", `
     let textBox = UI.getChild(inputWrapper, [1])
     let dropdownWrapper = UI.getChild(element, [1])
     let dropdownList = UI.getChild(dropdownWrapper, [0])
+    let tagContainer = UI.getChild(inputWrapper, [0])
 
     // Store the options passed to component
     let options = params.options
@@ -103,21 +104,29 @@ UI.register("input-tagify", `
     }
 
     container.addTag = (tag) => {
-        UI.add(container, UI.component("tagify-tag", {title: tag}, {}, {cloudParent: container}), [0, 0, 0])
+        UI.add(tagContainer, UI.component("tagify-tag", {title: tag}, {}, {cloudParent: container}), [0])
         tags.push(tag)
     }
 
     /**
      * Set filter options
      */
-    container.setOptions = (o) => {
+    container.setOptions = (o, updateD=true) => {
         options = o
-        updateDropdown()
+        if (updateD) {
+            updateDropdown()
+        }
     }
 
-    container.addChoice = (o) => {
+    container.addChoice = (o, updateD = true) => {
         options.push(o)
-        updateDropdown()
+        if (updateD) {
+            updateDropdown()
+        }
+    }
+
+    container.renamePlaceholder = (name) => {
+        UI.setAttributes(textBox, {"data-placeholder": name})
     }
 
     /**
@@ -140,6 +149,16 @@ UI.register("input-tagify", `
         if (i > -1) {
             tags.splice(i, 1)
         }
+    }
+
+    container.destroyAllTags = () => {
+        for (let el of [...tagContainer.children]) {
+            container.destroyTag(el.children[0].textContent)
+            el.remove()
+            el.destroy()
+        }
+
+        tags = []
     }
 
     container.getTags = () => {return tags}
@@ -251,5 +270,8 @@ UI.register("tagify-tag", `
     UI.getChild(element, [1]).onclick = () => {
         element.remove()
         element.cloudParent.destroyTag(params.title)
+    }
+    element.destroy = () => {
+        element.children[1].onclick = null
     }
 })

@@ -35,17 +35,13 @@
     flex-wrap: nowrap;
     overflow-x: scroll;
     box-sizing: border-box;
-    height: fit-content;
-    padding: 4px;
-    /*padding: 0 8px;*/
-    background-color: var(--c-bg);
-    border: 2px solid var(--c-bd);
+    height: 100%;
 }
 
 .cloud-ui-tagify-input {
     position: relative;
     display: inline-block;
-    min-width: 0;
+    min-width: var(--text-size);
     line-height: inherit;
     height: fit-content;
     box-sizing: border-box;
@@ -84,6 +80,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    white-space: nowrap;
     &:hover {
         background-color: var(--c-accent-bg);
         color: var(--c-accent);
@@ -113,6 +110,10 @@
 }
 
 .cloud-ui-tagify-wrapper {
+    padding: 4px;
+    background-color: var(--c-bg);
+    border: 2px solid var(--c-bd);
+
     height: fit-content;
     width: fit-content;
     position: relative;
@@ -120,12 +121,6 @@
 }
 
 /* Add these styles to the existing style.css file */
-
-.cloud-ui-input-tagify-container {
-    position: relative;
-    flex-direction: column;
-    height: fit-content;
-}
 
 .cloud-ui-dropdown-wrapper {
     position: absolute;
@@ -142,7 +137,7 @@
     display: none;
 
     z-index: 3;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
 
     transform: translate(0, calc(-1*var(--text-size)));
 }

@@ -7,7 +7,8 @@ async function main() {
     ], "./UI/components/")
     await UI.loadComponents([
         "navbar.js",
-        "inputFilter.js"
+        "inputFilter.js",
+        "popupMenu.js",
     ], "./components/")
     await UI.loadScripts([
         "ManageState.js",

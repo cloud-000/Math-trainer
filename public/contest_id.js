@@ -129,6 +129,19 @@ const CONTEST_IDS = {
             "name": "EMCC",
             "id": 4718194,
             "link": "https://exetermathclub.com/archives"
+        },
+        {
+            "name": "Putnam",
+            "id": 3249,
+            "link": "https://kskedlaya.org/putnam-archive/"
+        },
+        {
+            "name": "mathleague.org",
+            "id": 134,
+            "type": "forum",
+            "rules": {
+
+            }
         }
     ],
     "UserMocks": [
@@ -193,7 +206,48 @@ const CONTEST_IDS = {
         },
         {
             "name": "ZeMC",
-            "link": "https://benny-w.github.io/ZeMC/"
+            "ids": [
+                2505703,
+                3211241,
+                3623297,
+            ],
+            "link": "https://benny-w.github.io/ZeMC/",
+        },
+        {
+            "name": "Solstice Math Olympiads (SSMO)",
+            "id": 3072130,
+            "type": "forum",
+            "rules": {
+                names: [
+                    {
+                        regex:  /^(W|S)?SMO (\d{4}) Relay Round (\d+) (?:Problem|Question) (\d+)/,
+                        metadata: (matches) => {return {
+                            year: matches[2],
+                            name: `${matches[1]}SMO ${matches[2]} Relay ${matches[3]}`,
+                            n: matches[4],
+                        }}
+                    },
+                    {
+                        regex: /^(W|S)?SMO\s+(\d{4})\s*([^\s]+)\s*(?:Round)?\s+Problem\s*(\d+)/,
+                        metadata: (matches) => {return {
+                            year: matches[2],
+                            name: `${matches[1]}SMO ${matches[2]} ${matches[3]}`,
+                            n: matches[4],
+                        }}
+                    }
+                ],
+                posters: ["SMO_Team", "mudkip42"]
+            }
+        },
+        {
+            "name": "2025 DISCUS AMC",
+            "id": 4624886,
+            "type": "forum"
+        },
+        {
+            "type": "collection",
+            "name": "CNCM",
+            "id": 1282021
         }
     ],
     "NotMath": [
@@ -215,3 +269,11 @@ const SOLUTION_USERS = [
     {"id": 672616, "name": "lpieleanu"},
     {"id": 86424, "name": "Mrdavid445"}
 ]
+
+const ALL_SERIES = [
+    ...CONTEST_IDS["MAA"],
+    ...CONTEST_IDS["CollegeComp"],
+    ...CONTEST_IDS["Other"],
+    ...CONTEST_IDS["UserMocks"],
+    ...CONTEST_IDS["UserContestSeries"],
+].map(o => o.name)

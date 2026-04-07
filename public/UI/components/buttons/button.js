@@ -26,3 +26,11 @@ UI.register("button-link-nav", `
     icon: "link",
     href: "/testing"
 })
+
+UI.register("button-icon", `
+<button class="button flex" style-type="act" only-icon>
+    <icon class="material-symbols-rounded">@param(icon)</icon>
+</button>
+`, {
+    icon: "heart_plus"
+})
