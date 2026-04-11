@@ -20,7 +20,8 @@
 .cloud-ui-auth-input-container {
     height: fit-content;
     flex-direction: column;
-    gap: 8px;
+    gap: 1rem;
+    margin-bottom: 8px;
 }
 
 .cloud-ui-auth-dropdown {
@@ -72,5 +73,30 @@
             background-color: var(--c-accent-bg);
             color: var(--c-accent);
         }
+    }
+}
+
+.cloud-ui-show-hide-password {
+    margin-right: 6px;
+    color: var(--c-text2);
+    opacity: 0.3;
+    &:hover {
+        opacity: 0.7;
+    }
+    &::after {
+        display: block;
+        content: "SHOW";
+    }
+    &[shown]::after {
+        content: "HIDE";
+    }
+}
+
+.cloud-ui-auth-link-other-action {
+    color: var(--c-text2);
+    margin-top: 0.5rem;
+    opacity: 0.7;
+    &:hover {
+        color: var(--c-accent);
     }
 }

@@ -12,6 +12,7 @@ class SpaApp extends ManageState {
         })
         this.sideElements = {} // HashMap
         this.data = {}
+        this.userAuthed = false
     }
 
     onUserLoaded() {
@@ -43,16 +44,36 @@ class SpaApp extends ManageState {
         this.addContentTo(this.element)
     }
 
+    /**
+     * @param method
+     * @param details
+     * @abstract
+     * @returns {Promise}
+     */
     async authenticate(method, details) {return false}
 
-    createState(name, state) {
+    /**
+     * @param method
+     * @param details
+     * @abstract
+     * @returns {Promise}
+     */
+    async signup(method, details) {return false}
+
+    createState(name, state, authRequired=false) {
         super.createState(name, state)
-        this.routes[name] = name
+        this.routes[name] = {
+            name: name,
+            authRequired: authRequired,
+        }
     }
 
-    setRoutes(stateName, pages) {
+    setRoutes(stateName, pages, authRequired=false) {
         pages.forEach((page) => {
-            this.routes[page] = stateName
+            this.routes[page] = {
+                name: stateName,
+                authRequired: authRequired
+            }
         })
     }
 
@@ -63,7 +84,11 @@ class SpaApp extends ManageState {
             exists = Object.hasOwn(this.routes, path)
         }
         if (exists) {
-            this.state = this.routes[path]
+            if (this.routes[path].authRequired && !this.userAuthed) {
+                this.state = "/sign-in"
+            } else {
+                this.state = this.routes[path].name
+            }
         } else {
             this.state = "404"
         }

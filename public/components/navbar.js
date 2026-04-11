@@ -11,4 +11,8 @@ UI.register("nav-bar", `
         
     </div>
 </div>
-`)
+`, {}, (element, params) => {
+    element.addToBottom = (e) => {
+        UI.add(element, e, [0, 1, 0])
+    }
+})

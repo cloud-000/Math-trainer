@@ -1,5 +1,6 @@
 async function main() {
     CStorage.init()
+    // CStorage.clear()
     setupTheme()
     await UI.loadComponents([
         "buttons/button.js",
@@ -27,6 +28,7 @@ async function main() {
     ], "./UI/states/")
     await UI.loadScripts([
         "AppPage.js",
+        "Home.js",
         "Countdown.js",
         "GrindSheet.js",
         "Search.js",
@@ -41,17 +43,19 @@ async function main() {
     const app = new App()
     app.init()
     app.addTo(document.body)
-    app.refresh()
+    // app.refresh()
 
     const supabaseUrl = ENV.DATABASE_URL
     const supabaseKey = ENV.DATABASE_KEY
     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
-
+    // await signOut(supabaseClient)
+    // TODO: Must Hide UUID
     await checkAuth(supabaseClient)
     if (!CStorage.getItem("logged-in")) {
-        app.state = "/auth"
+        app.state = "/sign-in"
     }
     await app.setClient(supabaseClient)
+    app.refresh()
 
     /*let { data, error } = await supabaseClient
         .from("Problems")
@@ -84,9 +88,14 @@ async function checkAuth(sbClient) {
     if (error || !data?.claims) {
         return error
     }
+    CStorage.setItem("logged-in", data.claims)
+    console.log(data)
     // TODO: fix to be safe (not local storage)
     return data
+}
 
+async function signOut(sbClient) {
+    let {error} = await sbClient.auth.signOut({scope: "local"})
 }
 
 main()

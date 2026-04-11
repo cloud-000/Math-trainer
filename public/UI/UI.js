@@ -108,13 +108,13 @@ function replaceWithParams(text, params) {
  * @param{HTMLElement} parent
  * @param{HTMLElement|HTMLElement[]} child
  * @param{number|number[]} index
+ * @param{Boolean} debug
  * */
-UI.add = (parent, child, index=parent.children.length) => {
-
+UI.add = (parent, child, index=parent.children.length, debug=false) => {
     if (typeof index !== "number") {
-
         if (index.length > 1) {
-            UI.add(parent.children[index[0]], child, index.slice(0, -1))
+            let firstIndex = index.shift()
+            UI.add(parent.children[firstIndex], child, index, debug)
             return;
         } else {
             if (index.length === 1) {
@@ -123,6 +123,10 @@ UI.add = (parent, child, index=parent.children.length) => {
                 return
             }
         }
+    }
+    if (debug) {
+        console.log(index)
+        console.log(parent)
     }
     if (index >= parent.children.length) {
         if (Array.isArray(child)) {

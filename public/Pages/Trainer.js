@@ -39,6 +39,7 @@ class TrainPage extends MyAppPage {
                 let result = this.problemSubmissionWrapper.children[0]?.handleAnswer(true)
                 if (result === 0) { // no answer
                     await this.generateNewProblem()
+                    this.submitButton.removeAttribute("disabled")
                     return;
                 }
                 this.data.attempts += 1

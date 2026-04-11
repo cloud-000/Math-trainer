@@ -6,6 +6,17 @@ class App extends SpaApp {
     init() {
         super.init()
         this.addSideElement("nav-bar", UI.component("nav-bar"), this.element, 0)
+        this.getSideElement("nav-bar").addToBottom(UI.component("button", {text: "Logout"}, {}, {
+            onclick: async () => {
+                await signOut(this.client)
+                this.userAuthed = false
+                this.user = null
+                this.userStats = null
+                CStorage.setItem("logged-in", null)
+                this.refresh()
+            }
+        }))
+
         this.addSideElement("filters", UI.element("div", {"class": "flex expand filter-search-head",}),
             UI.getChild(this.element, [1])
         )
@@ -81,7 +92,7 @@ class App extends SpaApp {
             text: "Home",
             icon: "home",
             href:  "/"
-        }, new TrainPage())
+        }, new HomePage());
 
         this.addPage({
             text: "Library",
@@ -102,9 +113,10 @@ class App extends SpaApp {
             disabled: true,
         }, new CountdownPage())
 
-        this.createState("/auth", new AuthPage())
+        this.createState("/sign-up", new SignUpPage())
+        this.createState("/sign-in", new SignInPage())
 
-        this.setRoutes( "/", ["index.html"])
+        this.setRoutes( "/", ["index.html"], true)
 
         UI.add(document.body, switch1)
     }
@@ -116,16 +128,27 @@ class App extends SpaApp {
     // Supabase
     async setClient(client) {
         this.client = client
+        if (CStorage.getItem("logged-in")) {
+            await this.onUserSignIn()
+        }
     }
     async onUserSignIn(details) {
         this.user = CStorage.getItem("logged-in")
         if (!this.user) {
             let {data, error} = (await this.client.auth.signInWithPassword(details))
-            if (error || !data || data?.session == null) return false
-            this.user = data
+            if (error || !data || data?.session == null) return {
+                error: true,
+                message: "Incorrect credentials"
+            }
+            this.user = data.user
+            this.data.userId = this.user.id
+            CStorage.setItem("logged-in", this.user)
+        } else {
+            // JWT getClaims
+            this.data.userId = this.user.sub ?? this.user.id
         }
-        CStorage.setItem("logged-in", this.user)
-        this.userStats = CStorage.getItem("userStats") ?? (await this.client.from("Profiles").select("*").eq("id", this.user.user.id))?.data[0]
+        this.userAuthed = true
+        this.userStats = CStorage.getItem("userStats") ?? (await this.client.from("Profiles").select("*").eq("id", this.data.userId))?.data[0]
         await CStorage.asyncMemoize("db-contests", async () => {
             return (await this.client.from("Series").select("name, id")).data
         })
@@ -139,19 +162,40 @@ class App extends SpaApp {
         return true
     }
 
+    async signup(method, details) {
+        console.log(method, details)
+        let {data, error} = await this.client.auth.signUp({
+            email: details.email,
+            password: details.password,
+            options: {
+                data: {username: details.username}
+            }
+        })
+        console.log(data, error)
+    }
+
     async authenticate(method, details) {
         console.log(method, details)
         switch (method) {
-// 323421423@asfadsf.oads
+
             case "sign-up":
                 return false;
             default:
             case "sign-in":
-                await this.onUserSignIn({
-                    email: details.email,
+                // fetch username
+                let {data, error} = await this.client.rpc("get_profile_email_by_username", {
+                    p_username: details.username
+                })
+                if (error) {
+                    return {
+                        error: true,
+                        message: error
+                    }
+                }
+                return await this.onUserSignIn({
+                    email: data[0].email,
                     password: details.password,
                 })
-                break;
         }
         return false
         // await super.authenticate(method, details);
@@ -193,8 +237,8 @@ class App extends SpaApp {
             .limit(pageSize)
     }
 
-    addPage(params, state) {
-        super.createState(params["href"], state)
+    addPage(params, state, authRequired=true) {
+        super.createState(params["href"], state, authRequired)
         if (this.dev) {
             params["href"] = this.devRoute + params["href"];
         }

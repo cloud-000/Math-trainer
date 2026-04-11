@@ -1,27 +1,67 @@
 .cloud-ui-input-form-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
     color: var(--c-text);
-
+    gap: 2px;
+    &[invalid] {
+        color: var(--c-wrong);
+        & > .cloud-ui-input-form {
+            border-color: var(--c-wrong);
+        }
+        & > .cloud-ui-input-error-message {
+            height: fit-content;
+            visibility: visible;
+            color: var(--c-wrong);
+        }
+    }
 }
 
 .cloud-ui-input-form {
+    flex-direction: row;
     width: calc(var(--text-size)*15);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     color: inherit;
     font-size: inherit;
     border: var(--bd-size) solid var(--c-bd);
     background-color: var(--c-bg-m);
     outline: none;
     border-radius: 10px;
+    box-sizing: border-box;
+    &:focus-within {
+        border-color: var(--c-accent);
+    }
+}
+
+.cloud-ui-input-form-input {
+    caret-shape: block;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    margin: 0;
     padding: 6px;
+    color: inherit;
+    font-size: inherit;
+    border-radius: inherit;
+    background-color: transparent;
+
     &::selection {
         background-color: var(--c-accent-bg);
     }
     &::placeholder {
         color: var(--c-text2);
     }
-    &:focus {
-        border-color: var(--c-accent);
-    }
+}
+
+.cloud-ui-input-error-message {
+    width: 100%;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+    font-size: calc(var(--text-size) - 4px);
+    height: 0;
 }
