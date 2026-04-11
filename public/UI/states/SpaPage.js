@@ -6,6 +6,8 @@ class SpaPage extends State {
         this.shownSideElements = []
     }
 
+    onUserLoaded() {}
+
     enter() {
         super.enter()
         this.manager.setElement(this.element)

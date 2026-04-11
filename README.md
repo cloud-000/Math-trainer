@@ -32,3 +32,8 @@ I am also unsure on how to update the dataset of problems (after I put it on the
     - Advanced querying
 - Elo ranking for problems and users
 - Organization structure
+- Social aspect in trainer (solve with others live)
+
+## Credits
+This project uses KaTeX is used for rendering LaTeX expressions \
+It also uses Google Material Icons, licensed under the Apache License 2.0. Icons loaded via Google Fonts CDN

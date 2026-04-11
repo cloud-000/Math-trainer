@@ -1,0 +1,21 @@
+@property --cool-count {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+}
+
+.cool-count {
+    flex-direction: row;
+    --cool-count: 0;
+    counter-reset: num var(--cool-count);
+    transition: --cool-count 2s ease;
+
+    font-variant-numeric: tabular-nums;
+    &::after {
+        content: counter(num);
+    }
+}
+
+.cool-count-label {
+
+}

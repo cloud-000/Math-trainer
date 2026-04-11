@@ -3,13 +3,20 @@ async function main() {
     setupTheme()
     await UI.loadComponents([
         "buttons/button.js",
-        "icons/icon.js"
+        "icons/icon.js",
+        "input/input.js",
+        "auth/authUI.js"
     ], "./UI/components/")
     await UI.loadComponents([
         "navbar.js",
         "inputFilter.js",
         "popupMenu.js",
-        "range.js"
+        "range.js",
+        "input.js",
+        "mathStatement.js",
+        "mathProblem.js",
+        "UIbar.js",
+        "coolcount.js"
     ], "./components/")
     await UI.loadScripts([
         "ManageState.js",
@@ -27,7 +34,8 @@ async function main() {
         "Trainer.js",
         "Settings.js",
         "App.js",
-        "style.css"
+        "style.css",
+        "authPage.js"
     ], "./Pages/")
 
     const app = new App()
@@ -35,12 +43,16 @@ async function main() {
     app.addTo(document.body)
     app.refresh()
 
-    const supabaseUrl = "https://fpuslidghwkkcvollbln.supabase.co"
-    const supabaseKey = "sb_publishable_gDidjPsWR4Eo482cS5VgCw_N9vckEMr"
+    const supabaseUrl = ENV.DATABASE_URL
+    const supabaseKey = ENV.DATABASE_KEY
     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
     await checkAuth(supabaseClient)
-    app.signIn(supabaseClient)
+    if (!CStorage.getItem("logged-in")) {
+        app.state = "/auth"
+    }
+    await app.setClient(supabaseClient)
+
     /*let { data, error } = await supabaseClient
         .from("Problems")
         .select()
@@ -65,16 +77,15 @@ function setupTheme() {
 // DEV ONLY CStorage
 async function checkAuth(sbClient) {
     if (CStorage.getItem("logged-in")) {
-        console.log("Logged in")
-        return;
+        console.log("Logged in saved TODO fix later")
+        return CStorage.getItem("logged-in");
     }
     const { data, error } = await sbClient.auth.getClaims()
     if (error || !data?.claims) {
-        console.log("Login Failed")
-        return
+        return error
     }
-    CStorage.setItem("logged-in", "true")
-    console.log(data)
+    // TODO: fix to be safe (not local storage)
+    return data
 
 }
 

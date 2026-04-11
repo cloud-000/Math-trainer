@@ -1,13 +1,25 @@
 .cloud-ui-spa-wrapper {
-
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .cloud-ui-spa-content-wrapper {
     flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    flex-shrink: 1;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    /*overflow: auto;*/
 }
 
 .cloud-ui-spa-page {
     flex-direction: column;
+    height: 100%;
+    flex-shrink: 1;
+    min-height: 0;
 }
 
 .cloud-ui-spa-side-element {

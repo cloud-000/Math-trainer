@@ -1,3 +1,9 @@
+:root {
+    --math-font: "TeXGyrePagella";
+    --c-wrong: #ed3558;
+    --c-correct: #40b362;
+    --c-unsure: #e8c345;
+}
 .filter-search-head {
     height: fit-content;
     flex-wrap: wrap;
@@ -5,4 +11,84 @@
     padding: 1rem;
     background-color: var(--c-bg-m);
     border-bottom: var(--bd-size) solid var(--c-bd);
+}
+
+.search-results-wrapper-wrapper {
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    flex-shrink: 1;
+    min-height: 0;
+
+    box-sizing: border-box;
+    padding: var(--text-size);
+}
+
+.results-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: fit-content;
+    gap: var(--text-size);
+
+}
+/* Trainer */
+
+.trainer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.problem-timer {
+    white-space: nowrap;
+    color: var(--c-text2);
+    font-variant-numeric: tabular-nums;
+    opacity: 0.9;
+}
+
+.trainer-main-wrapper {
+    padding: calc(var(--text-size) / 2);
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.trainer-statement-wrapper {
+    /*margin-top: var(--text-size);*/
+    height: fit-content;
+    flex: 1 0 auto;
+}
+
+.trainer-submission-wrapper {
+    flex: 0 1 fit-content;
+    width: 100%;
+}
+
+.trainer-source-wrapper {
+    flex: 0 1 calc(var(--text-size) * 2);
+    min-height: var(--text-size);
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.trainer-below-statement {
+    padding: 6px;
+    height: fit-content;
+    margin-top: 8px;
+}
+
+.user-elo-display {
+    white-space: nowrap;
+    color: var(--c-text2)
 }

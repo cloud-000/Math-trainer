@@ -28,7 +28,8 @@ UI.register("input-tagify", `
     let tagContainer = UI.getChild(inputWrapper, [0])
 
     // Store the options passed to component
-    let options = params.options
+    let options;
+    let trueValues = []
     let tags = []
     /**
      * Filter and display dropdown options based on input
@@ -37,9 +38,11 @@ UI.register("input-tagify", `
         const inputValue = textBox.innerText.trim().toLowerCase()
         dropdownList.innerHTML = ""
 
+
         const filteredOptions = options.filter(opt =>
             opt.toLowerCase().includes(inputValue) && !tags.includes(opt)
         )
+
         if (filteredOptions.length === 0) {
             dropdownWrapper.classList.remove("active")
             return
@@ -96,18 +99,26 @@ UI.register("input-tagify", `
         tags.push(tag)
     }
 
+    container.getCurrentTags = () => {
+        return tags.map(item => trueValues[options.indexOf(item)].value ?? item)
+    }
+
     /**
      * Set filter options
      */
     container.setOptions = (o, updateD=true) => {
-        options = o
+        options = o.map(opt => opt.name ?? opt)
+        trueValues = o
         if (updateD) {
             updateDropdown()
         }
     }
 
-    container.addChoice = (o, updateD = true) => {
-        options.push(o)
+    container.setOptions(params.options, false)
+
+    container.addOption = (o, updateD = true) => {
+        options.push(o.name ?? o)
+        trueValues.push(o)
         if (updateD) {
             updateDropdown()
         }

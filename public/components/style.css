@@ -29,7 +29,30 @@
     z-index: 1;
     position: absolute;
 }
+/*Input*/
+.cloud-ui-input-box {
+    font-size: var(--text-size);
+    align-items: center;
+    box-sizing: border-box;
+    padding: 6px;
+    border-radius: var(--text-size);
+    border: var(--bd-size) solid var(--c-bd);
+    &:has(> .cloud-ui-input:focus) {
+        border-color: var(--c-accent);
+        background-color: var(--c-bg-m)
+    }
 
+}
+
+.cloud-ui-input {
+    appearance: none !important;
+    outline: none;
+    font-size: inherit;
+    border: none;
+    background: transparent;
+}
+
+    /*Tagify*/
 .cloud-ui-input-tagify {
     display: flex;
     flex-wrap: nowrap;
@@ -140,7 +163,7 @@
     overscroll-behavior-inline: contain;
     display: none;
 
-    z-index: 3;
+    z-index: 5;
     /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
 
     transform: translate(0, calc(-1*var(--text-size)));

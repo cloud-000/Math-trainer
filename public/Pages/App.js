@@ -1,30 +1,38 @@
+// Be forewarned, monkey patching and spaghetti awaits
 class App extends SpaApp {
     constructor() {
         super();
     }
     init() {
         super.init()
-        // this.contentElement.remove()
         this.addSideElement("nav-bar", UI.component("nav-bar"), this.element, 0)
-        // UI.add(this.element, UI.element("div", {class: "flex expand", style: "flex-direction: column"}))
         this.addSideElement("filters", UI.element("div", {"class": "flex expand filter-search-head",}),
             UI.getChild(this.element, [1])
         )
 
+        let addFilter = (name, element) => {
+            UI.add(this.getSideElement("filters"), element)
+            this.data[name] = element
+        }
+
         let switch1 = UI.component("popup-menu", {
             items: [
-                { text: "General Type", onclick: () => this.setSwitch1(mockTypeChoices, 0) },
-                { text: "Series", onclick: () => this.setSwitch1(mockTypeChoices, 1)},
-                { text: "Test", onclick: () => this.setSwitch1(mockTypeChoices, 2) },
+                // { text: "General Type", onclick: () => this.setSwitch1(mockTypeChoices, 0) },
+                { text: "Series", onclick: () => this.setSwitch1(this.data["test-series"], 1)},
+                { text: "Test", onclick: () => this.setSwitch1(this.data["test-series"], 2) },
             ]
         })
-        let acgnChoices = UI.component("input-tagify", {
-            options: ["A", "C", "G", "N", "Other"],
+        addFilter("topics", UI.component("input-tagify", {
+            options: [{name: "A"}, {name: "C"}, {name: "G"}, {name: "N"}, {name: "Other", value: "O"}],
             placeholder: "Select (ACGN) or Other"
-        })
-        let mockTypeChoices = UI.component("input-tagify", {
+        }))
+        addFilter("mock-type", UI.component("input-tagify", {
             options: Object.keys(TYPES),
             placeholder: "Select Mock Type"
+        }))
+        addFilter("test-series", UI.component("input-tagify", {
+            options: ["Error"],
+            placeholder: "Error"
         }, {}, {}, (e) => {
             UI.add(e, UI.component("button", {text: null, icon: "more_vert", styleType: "act"}, {}, {
                 onclick: (e) => {
@@ -32,35 +40,23 @@ class App extends SpaApp {
                     setTimeout(() => switch1.open(e.clientX, e.clientY), 10);
                 }
             }), 0)
-        })
-        let tagChoices = UI.component("input-tagify", {
+        }))
+        addFilter("tags", UI.component("input-tagify", {
             options: ["To be implemented..."],
             placeholder: "Tags yet to be made"
-        }, {"style": "flex-basis: 100%"})
-        UI.add(this.getSideElement("filters"), mockTypeChoices)
-        UI.add(this.getSideElement("filters"), acgnChoices)
-        UI.add(this.getSideElement("filters"), tagChoices)
-        UI.add(this.getSideElement("filters"), UI.component("labeled-range", {
-            text: "Year",
-            min: 1974,
-            max: 2026,
+        }, {}))
+        // --- Range Filters ----
+        addFilter("range-elo", UI.component("labeled-range", {
+            text: "Elo",
+            min: 100,
+            max: 2500,
             step: 1,
-            lowerValue: 2000,
-            upperValue: 2020,
-            labelInterval: 12,
-            tickInterval: 3,
-        }, {"style": "flex-basis: 400px"}))
-        UI.add(this.getSideElement("filters"), UI.component("labeled-range", {
-            text: "Elo (Not Implemented)",
-            min: 0,
-            max: 10,
-            step: 0.5,
-            lowerValue: 2,
-            upperValue: 5,
-            labelInterval: 2.5,
-            tickInterval: 0.5,
-        }, {"style": "flex-basis: 400px"}))
-        UI.add(this.getSideElement("filters"), UI.component("labeled-range", {
+            lowerValue: 670,
+            upperValue: 1500,
+            labelInterval: 500,
+            tickInterval: 100,
+        }, {"style": "flex-basis: 250px; flex-grow: 1;"}))
+        addFilter("range-quality", UI.component("labeled-range", {
             text: "Quality (Not Implemented)",
             min: 0,
             max: 10,
@@ -69,16 +65,23 @@ class App extends SpaApp {
             upperValue: 5,
             labelInterval: 2,
             tickInterval: 1,
-        }, {"style": "flex-basis: 400px"}))
-
-
-        this.setSwitch1(mockTypeChoices, 0)
+        }, {"style": "flex-basis: 250px; flex-grow: 1;"}))
+        addFilter("range-year", UI.component("labeled-range", {
+            text: "Year (Not Implemented)",
+            min: 1974,
+            max: 2026,
+            step: 1,
+            lowerValue: 2000,
+            upperValue: 2020,
+            labelInterval: 12,
+            tickInterval: 3,
+        }, {"style": "flex-basis: 100%"}))
 
         this.addPage({
             text: "Home",
             icon: "home",
             href:  "/"
-        }, new SearchPage())
+        }, new TrainPage())
 
         this.addPage({
             text: "Library",
@@ -86,16 +89,109 @@ class App extends SpaApp {
             href: "/search"
         }, new SearchPage())
 
+        this.addPage({
+            text: "Train",
+            icon: "exercise",
+            href: "/train"
+        }, new TrainPage())
+
+        this.addPage({
+            text: "Buzzer",
+            icon: "sprint",
+            href: "/countdown",
+            disabled: true,
+        }, new CountdownPage())
+
+        this.createState("/auth", new AuthPage())
+
         this.setRoutes( "/", ["index.html"])
 
         UI.add(document.body, switch1)
     }
 
-    // Supabase
-    signIn(client) {
-        this.client = client
+    onClientReady() {
+        this.setSwitch1(this.data["test-series"], 1);
     }
 
+    // Supabase
+    async setClient(client) {
+        this.client = client
+    }
+    async onUserSignIn(details) {
+        this.user = CStorage.getItem("logged-in")
+        if (!this.user) {
+            let {data, error} = (await this.client.auth.signInWithPassword(details))
+            if (error || !data || data?.session == null) return false
+            this.user = data
+        }
+        CStorage.setItem("logged-in", this.user)
+        this.userStats = CStorage.getItem("userStats") ?? (await this.client.from("Profiles").select("*").eq("id", this.user.user.id))?.data[0]
+        await CStorage.asyncMemoize("db-contests", async () => {
+            return (await this.client.from("Series").select("name, id")).data
+        })
+        await CStorage.asyncMemoize("db-tests", async () => {
+            return (await this.client.from("Tests").select("name, id")).data
+        })
+        // Tags, and Mock Types
+        // this.saveProgress()
+        this.onClientReady()
+        this.onUserLoaded()
+        return true
+    }
+
+    async authenticate(method, details) {
+        console.log(method, details)
+        switch (method) {
+// 323421423@asfadsf.oads
+            case "sign-up":
+                return false;
+            default:
+            case "sign-in":
+                await this.onUserSignIn({
+                    email: details.email,
+                    password: details.password,
+                })
+                break;
+        }
+        return false
+        // await super.authenticate(method, details);
+    }
+
+    saveProgress() {
+        CStorage.setItem("userStats", this.userStats)
+    }
+
+
+    queryProblems({series, tests, topics, difficulty, tags, years}) {
+        let qString =
+`*,
+ Tests!inner (
+ ${[
+    years?.length > 0 ? "year" : null,
+    series?.length > 0 ? "series" : null,
+    tests?.length > 0 ? "id" : null,
+    "name",
+].filter(k => k !== null && k!== undefined).join(",\n")}
+)`
+        let query = this.client.from("Problems")
+         .select(qString)
+        if (topics?.length > 0) query = query.in("topic", topics)
+        if (tests?.length > 0) query = query.in("Tests.id", tests)
+        if (difficulty?.length > 1) { query = query.gte("difficulty", difficulty[0]).lte("difficulty", difficulty[1]) }
+        if (years?.length > 0) {
+            query = (years.length === 1) ?
+                query.eq("Tests.year", years[0]) :
+                (query.gte("Tests.year", years[0])
+                    .lte("Tests.year", years[1]))
+        }
+        return query
+    }
+
+    queryPagination(query, previousId, pageSize) {
+        return query.order("id", {ascending: true})
+            .gt("id", previousId)
+            .limit(pageSize)
+    }
 
     addPage(params, state) {
         super.createState(params["href"], state)
@@ -112,22 +208,46 @@ class App extends SpaApp {
 
     setSwitch1(dropdown, whichIndex) {
         dropdown.destroyAllTags()
+        dropdown.specialIndex = whichIndex
         switch (whichIndex) {
             case 0:
-                dropdown.renamePlaceholder("Mock Types")
-                dropdown.setOptions(Object.keys(TYPES), false)
                 break;
             case 1:
                 dropdown.renamePlaceholder("Select Series")
-                dropdown.setOptions(ALL_SERIES, false)
+                dropdown.setOptions(CStorage.getItem("db-contests").map(s => {
+                    return {
+                        name: s.name,
+                        value: s.id
+                    }
+                }), false)
+
                 break
             case 2:
                 dropdown.renamePlaceholder("Select Test")
-                dropdown.setOptions(["Why did commit that... :("], false)
+                dropdown.setOptions(CStorage.getItem("db-tests").map(s => {
+                    return {
+                        name: s.name,
+                        value: s.id
+                    }
+                }), false)
                 break;
-
         }
 
     }
 
+
+    async calculateNewRating(details) {
+        let sent = {
+            p_problem_id: details.problemId,
+            p_user_attempts: details.attempts,
+            p_user_time: details.time,
+            p_ideal_attempts: details.idealAttempts,
+            p_ideal_time: details.idealTime
+        }
+        console.log(sent)
+        const { data, error } = await this.client.rpc("process_problem_submission", sent);
+        this.userStats.rating = data["new_rating"] ?? -1
+        this.saveProgress()
+        return data
+    }
 }

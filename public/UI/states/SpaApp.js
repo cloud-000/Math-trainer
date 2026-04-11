@@ -11,6 +11,11 @@ class SpaApp extends ManageState {
             "class": "expand flex cloud-ui-spa-content-wrapper"
         })
         this.sideElements = {} // HashMap
+        this.data = {}
+    }
+
+    onUserLoaded() {
+        this.states.forEach(s => s.onUserLoaded())
     }
 
     addTo(element) {UI.add(element, this.element)}
@@ -37,6 +42,8 @@ class SpaApp extends ManageState {
         })
         this.addContentTo(this.element)
     }
+
+    async authenticate(method, details) {return false}
 
     createState(name, state) {
         super.createState(name, state)

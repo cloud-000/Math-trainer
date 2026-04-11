@@ -22,6 +22,7 @@ class ManageState {
         this.#states[name] = state
         state.name = name
         state.manager = this
+        state.onAdd()
     }
     set state(name) {
         if (this.#curr != null) {
@@ -43,6 +44,7 @@ class State{
         this.manager=e
         this.name = null
     }
+    onAdd() {}
     contextmenu(e){}
     enter(){}exit(){}resize(){}
     destroy(){

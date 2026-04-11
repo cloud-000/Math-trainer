@@ -1,0 +1,144 @@
+.cloud-ui-math-statement-entire-container {
+    box-sizing: border-box;
+    /*padding: 2px;*/
+}
+.cloud-ui-math-statements-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.cloud-ui-math-statement-wrapper {
+    width: 100%;
+    height: 100%;
+    display: block;
+    align-self: flex-start;
+    padding: 2px;
+    font-family: var(--math-font), sans-serif;
+}
+
+.cloud-ui-math {
+
+}
+
+.cloud-ui-math-image {
+    transform: scale(0.95);
+    max-width: min(max(70%, 200px), 575px);
+}
+
+/* Math Problem */
+.math-problem-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    flex-direction: column;
+    gap: 4px;
+    padding: calc(var(--text-size)/2);
+    border-radius: var(--text-size);
+    border: var(--bd-size) solid var(--c-bd);
+    background-color: var(--c-bg-m);
+}
+
+.math-problem-statement-wrapper {
+    width: 100%;
+}
+
+.math-problem-source {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    width: 100%;
+}
+
+.math-problem-test-name {
+    font-weight: bold;
+}
+.math-problem-n {
+    position: relative;
+    color: var(--c-text2);
+    /*animation: floatingLink 2s infinite ease-in-out;*/
+    & > a {
+        transition: opacity 0.1s linear;
+        text-decoration: none;
+        color: inherit;
+    }
+    & > a[href] {
+        font-weight: bold;
+    }
+    &:hover:has(a[href]) {
+        & > a {
+            opacity: 0;
+        }
+        & > .math-problem-link-icon {
+            left: calc(var(--text-size)*0.5);
+            transform: translate(0);
+            opacity: 1;
+        }
+    }
+    &:has(a[href]) {
+        color: var(--c-accent);
+        & > .math-problem-link-icon {
+            opacity: 0.2;
+        }
+    }
+    &:before {
+        display: inline-block;
+        content: "#";
+        opacity: 0.5;
+    }
+}
+
+.math-problem-link-icon {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    right: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.1s linear;
+    transform: translate(100%);
+    /*transform: translate(calc(var(--text-size)), 100%);*/
+}
+
+.math-problem-answer-choice-wrapper {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 0 var(--text-size);
+    padding-top: 6px;
+}
+
+.math-problem-answer-choice {
+    flex-direction: row;
+    padding: 4px 8px;
+    border-radius: 10px;
+    gap: 9px;
+    height: 100%;
+    flex-grow: 1;
+    border: var(--bd-size) solid transparent;
+    transition: border-color 0.2s ease-in-out, transform 0.2s ease;
+    & > .the-letter-choice {
+        color: var(--c-text2);
+    }
+    &:hover {
+        border-color: color-mix(in srgb, var(--c-accent), transparent);
+        & > .the-letter-choice {
+            color: var(--c-accent);
+        }
+        /*color: var(--c-accent);*/
+        transform: scale(1.1);
+        /*background: var(--c-accent-bg);*/
+    }
+}
+
+@scope(.cloud-ui-submit-select) {
+    .math-problem-answer-choice[active] {
+        background: color-mix(in srgb, var(--c-accent-bg), transparent);
+        color: var(--c-accent);
+        & > .the-letter-choice {
+            color: var(--c-accent);
+        }
+    }
+}

@@ -1,4 +1,5 @@
 Core:
+- Polish: Sidebar close, Filter UI, etc.
 - Filter by metadata
 - User Stats
     - ELO

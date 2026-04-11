@@ -1,0 +1,27 @@
+.cloud-ui-input-form-wrapper {
+    color: var(--c-text);
+
+}
+
+.cloud-ui-input-form {
+    width: calc(var(--text-size)*15);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    color: inherit;
+    font-size: inherit;
+    border: var(--bd-size) solid var(--c-bd);
+    background-color: var(--c-bg-m);
+    outline: none;
+    border-radius: 10px;
+    padding: 6px;
+    &::selection {
+        background-color: var(--c-accent-bg);
+    }
+    &::placeholder {
+        color: var(--c-text2);
+    }
+    &:focus {
+        border-color: var(--c-accent);
+    }
+}

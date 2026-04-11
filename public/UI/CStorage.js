@@ -1,6 +1,6 @@
 class CStorage {
     static #storage = {}
-    static #identifer = document.location.href
+    static #identifer = new URL(window.location.href).origin
     static init() {
         if (localStorage.getItem(this.#identifer) === null) {
             this.#update()
@@ -23,7 +23,16 @@ class CStorage {
     static getItem(key) {
         return this.#storage[key]
     }
+    static getAll() {return this.#storage}
     static #update() {
         localStorage.setItem(this.#identifer, JSON.stringify(this.#storage))
+    }
+    static async asyncMemoize(name, callback) {
+        if (this.getItem(name) !== undefined) {
+            return this.getItem(name)
+        }
+
+        this.setItem(name, await callback.apply(null))
+        return this.getItem(name)
     }
 }

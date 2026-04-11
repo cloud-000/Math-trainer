@@ -37,4 +37,8 @@ UI.register("button-link-nav", `
     text: "I am an redirect?",
     icon: "link",
     href: "/testing"
+}, (e, p) => {
+    if (p.disabled) {
+        e.setAttribute("disabled", true)
+    }
 })
