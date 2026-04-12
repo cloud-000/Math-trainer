@@ -2,6 +2,7 @@
 class App extends SpaApp {
     constructor() {
         super();
+        this.dev = false
     }
     init() {
         super.init()
@@ -133,7 +134,8 @@ class App extends SpaApp {
         }
     }
     async onUserSignIn(details) {
-        this.user = CStorage.getItem("logged-in")
+        this.user = this.user ?? CStorage.getItem("logged-in")
+        console.log(details)
         if (!this.user) {
             let {data, error} = (await this.client.auth.signInWithPassword(details))
             if (error || !data || data?.session == null) return {
@@ -171,7 +173,14 @@ class App extends SpaApp {
                 data: {username: details.username}
             }
         })
+        if (error || !data.user) {
+            return {error: true}
+        }
         console.log(data, error)
+        this.userId = data.user.id
+        this.user = data.user
+        await this.onUserSignIn()
+        return true
     }
 
     async authenticate(method, details) {

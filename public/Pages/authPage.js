@@ -5,12 +5,18 @@ class SignUpPage extends MyAppPage {
         UI.add(this.element, UI.component("auth-form", {
             submit: async (email, username, password) => {
                 if (email && username && password) {
-                    await this.manager.signup("normal", {
+                    let success =await this.manager.signup("normal", {
                         email: email,
                         username: username,
                         password: password,
                     })
-                    alert(`Check your email ${email}`)
+
+                    if (success === true) {
+                        alert(`Verify your account via email ${email}`)
+                        this.manager.state = "/"
+                        console.log(this.manager.state)
+                    }
+
                 }
             }
         }))

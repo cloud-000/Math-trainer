@@ -2,7 +2,7 @@ class SpaApp extends ManageState {
     constructor() {
         super();
         this.devRoute = "/OrzMath/public/"
-        this.dev = true
+        this.dev = false
         this.routes = {}
         this.element = UI.element("div", {
             "class": "expand flex cloud-ui-spa-wrapper"
