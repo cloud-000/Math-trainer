@@ -135,7 +135,6 @@ class App extends SpaApp {
     }
     async onUserSignIn(details) {
         this.user = this.user ?? CStorage.getItem("logged-in")
-        console.log(details)
         if (!this.user) {
             let {data, error} = (await this.client.auth.signInWithPassword(details))
             if (error || !data || data?.session == null) return {
@@ -165,7 +164,6 @@ class App extends SpaApp {
     }
 
     async signup(method, details) {
-        console.log(method, details)
         let {data, error} = await this.client.auth.signUp({
             email: details.email,
             password: details.password,
@@ -176,8 +174,6 @@ class App extends SpaApp {
         if (error || !data.user) {
             return {error: true}
         }
-        console.log(data, error)
-        this.userId = data.user.id
         this.user = data.user
         await this.onUserSignIn()
         return true
@@ -186,7 +182,6 @@ class App extends SpaApp {
     async authenticate(method, details) {
         console.log(method, details)
         switch (method) {
-
             case "sign-up":
                 return false;
             default:
@@ -244,6 +239,39 @@ class App extends SpaApp {
         return query.order("id", {ascending: true})
             .gt("id", previousId)
             .limit(pageSize)
+    }
+
+    async getRecentProblems(max=10) {
+        return (await this.client.from("Submissions")
+            .select(`
+            user_id,
+            problem_id,
+            created_at,
+            rating_diff,
+            Problems (
+                statement,
+                difficulty,
+                test_id,
+                n,
+                aops_id,
+                Tests (
+                    name
+                )
+            )`).eq("user_id", this.data.userId)
+            .order("created_at", {ascending: false})
+            .limit(max)).data.map(ee => {
+                let p = ee["Problems"]
+                return {
+            difficulty: p.difficulty,
+            statement: p.statement,
+            test_id: p.test_id,
+            n: p.n,
+                    aops_id: p.aops_id,
+            problem_id: ee.problem_id,
+            created_at: ee.created_at,
+            rating_diff: ee.rating_diff,
+            test_name: p["Tests"].name
+        }})
     }
 
     addPage(params, state, authRequired=true) {

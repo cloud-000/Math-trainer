@@ -52,7 +52,11 @@ class TrainPage extends MyAppPage {
                         problemId: this.currentProblem.id,
                         rating: this.currentProblem.difficulty,
                     })
-
+                    this.manager.data["recent-problems"].unshift(Object.assign({
+                        created_at: (new Date()).toISOString(),
+                        rating_diff: change
+                    }, this.currentProblem))
+                    this.manager.updateCachedData("recent-problems")
                     // this.time = 0
                     // this.attempts = 0
                     await this.generateNewProblem()

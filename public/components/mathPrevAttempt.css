@@ -1,0 +1,23 @@
+.math-prev-attempt {
+    height: fit-content;
+    padding: 10px;
+    flex-direction: column;
+    background-color: var(--c-bg);
+    border: var(--bd-size) solid var(--c-bd);
+    & .math-problem-source {
+        width: fit-content;
+        gap: var(--text-size);
+        & .math-problem-elo {
+            opacity: 0.5;
+        }
+    }
+}
+
+.prev-attempt-statement-wrapper {
+    width: 100%;
+}
+
+.prev-attempt-source-wrapper {
+    width: 100%;
+    justify-content: space-between;
+}

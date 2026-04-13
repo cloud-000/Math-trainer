@@ -92,3 +92,20 @@
     white-space: nowrap;
     color: var(--c-text2)
 }
+
+.recent-attempts-wrapper {
+    padding: 6px;
+    height: fit-content;
+    /*align-items: flex-start;*/
+    /*justify-content: flex-start;*/
+    flex-direction: column;
+    gap: 5px;
+    background-color: var(--c-bg-m);
+    border: var(--bd-size) solid var(--c-bd);
+}
+
+.recent-attempts {
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
+}

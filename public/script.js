@@ -1,3 +1,4 @@
+const DEBUG = {}
 async function main() {
     CStorage.init()
     // CStorage.clear()
@@ -17,7 +18,8 @@ async function main() {
         "mathStatement.js",
         "mathProblem.js",
         "UIbar.js",
-        "coolcount.js"
+        "coolcount.js",
+        "mathPrevAttempt.js"
     ], "./components/")
     await UI.loadScripts([
         "ManageState.js",
@@ -41,6 +43,8 @@ async function main() {
     ], "./Pages/")
 
     const app = new App()
+    DEBUG.app = app
+    app.initCache()
     app.init()
     app.addTo(document.body)
     // app.refresh()
@@ -74,6 +78,16 @@ function setupTheme() {
         "c shadow": "rgb(103 103 120 / 30%)",
         "c accent": "rgb(50, 108, 236)",
         "c accent bg": "rgb(219, 233, 254)"
+    }))
+    Theme.storeTheme(new Theme("dark", {
+        "c bg": "rgb(57 63 75)",
+        "c bg m": "rgb(46 51 60)",
+        "c text": "rgb(200 204 211)",
+        "c text2": "rgb(107 112 124)",
+        "c bd": "rgb(54 57 62)",
+        "c shadow": "rgb(200 204 211)",
+        "c accent": "rgb(64 134 232)",
+        "c accent bg": "rgb(169 186 230)"
     }))
     Theme.theme = "plain"
 }

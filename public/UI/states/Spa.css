@@ -17,6 +17,7 @@
 
 .cloud-ui-spa-page {
     flex-direction: column;
+    justify-content: flex-start;
     height: 100%;
     flex-shrink: 1;
     min-height: 0;

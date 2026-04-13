@@ -15,6 +15,37 @@ class SpaApp extends ManageState {
         this.userAuthed = false
     }
 
+    initCache() {
+        let keys = CStorage.getItem(`spa-cloud-data-keys`)
+        console.log(keys)
+        keys?.forEach((key) => {
+            this.data[key] = CStorage.getItem(`spa-cloud-${key}`) ?? null
+        })
+    }
+
+    async cacheData(name, data) {
+        if (data != null) {
+            if (data.then) {
+                data = await data
+            }
+            this.data[name] = data
+            CStorage.setItem(`spa-cloud-${name}`, data)
+            CStorage.setItem(`spa-cloud-data-keys`, Object.keys(this.data))
+        }
+        return data
+    }
+
+    clearCache(name) {
+        delete this.data[name]
+        CStorage.removeItem(`spa-cloud-${name}`)
+    }
+
+    updateCachedData(name) {return this.cacheData(name, this.data[name])}
+
+    getCachedData(name, fallback=null) {
+        return this.data[name] ?? (this.cacheData(name, fallback?.call(null)))
+    }
+
     onUserLoaded() {
         this.states.forEach(s => s.onUserLoaded())
     }
