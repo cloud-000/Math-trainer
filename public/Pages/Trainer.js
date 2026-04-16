@@ -25,10 +25,10 @@ class TrainPage extends MyAppPage {
 
         this.header.addToSection(0, this.ratingElement)
         this.header.addToSection(2, this.timerElement)
-        this.header.addToSection(2, UI.component("button", {text: "", icon: "tune"}))
+        this.header.addToSection(2, UI.component("button", {text: "", icon: "tune", styleType: "edge"}))
 
-        this.footer.addToSection(0, UI.component("button", {text: "Report", icon: "flag"}))
-        this.footer.addToSection(2, UI.component("button", {text: "skip", icon: "arrow_forward"}, {},{
+        this.footer.addToSection(0, UI.component("button", {text: "Report", icon: "flag", styleType: "edge"}))
+        this.footer.addToSection(2, UI.component("button", {text: "skip", icon: "arrow_forward", styleType: "edge"}, {},{
             onclick: async () => {
                 await this.generateNewProblem()
             }

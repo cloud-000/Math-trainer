@@ -59,6 +59,22 @@
     }
 }
 
+.button[style-type="edge"] {
+    border: none;
+    border-radius: 0;
+    color: var(--c-text2);
+    box-shadow: none;
+    &:hover {
+        background-color: var(--c-bg-m);
+    }
+    &:active {
+        color: var(--c-accent);
+    }
+    & > span:not(.material-symbols-rounded) {
+        opacity: 0.5;
+    }
+}
+
 .button[only-icon] {
     padding: 4px;
 }

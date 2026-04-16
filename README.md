@@ -3,6 +3,8 @@
 A systemic storage of problems from variety of high quality contests, making grinding and exploring problem simple.
 ## Current State
 Currently working on collecting problems from AoPs and Supabase's PostgreSQL database,
+## PDF parsing
+Currently using nougat and docling on colab to parse mathcounts and mandelbrot contests!!
 ## Updating Problems
 The primary source of problems are from AoPs Community, it's various collections.
 [C13](https://artofproblemsolving.com/community/c13_contests) are a good source, but any Collection/Forum on AoPs works.\
