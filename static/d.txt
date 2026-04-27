@@ -1,0 +1,46 @@
+Test 12607
+[b]Sprint round[/b]
+1. Given that $x + 3 = 20$, copute the value of $x$
+19, 20, 15, 17
+
+2. Let $n$ be a positive integer. Compute the maximum possible value of $\gcd(3n + 1, 5n + 7)$
+8, 32, 16, 26
+
+3. Five friendly aliens named Glarb, Blop, Zork and Fleep are posing for a photograph in a straight line .Zork must stand in the exact middle of the line. Given that Glarb and Blop refuse to stand next to each other, compute the total number of different ways the five aliens can line up for the photograph.
+12, 20, 72, 16
+
+4. The function $f$ is defined by the equation $f(x) = x^2 - 4x + 5$. Compute the sum of all distinct values of $x$ for which $f(f(x)) = 1$
+-8, 0, 4, -4
+
+5. In the $xy$-plane, rectangle ABCD has vertices $A(0, 0)$, $B(8, 0)$, $C(8, 3)$, and $D(0, 3)$. Point $P$ lies on diagonal $\overline{AC}$ and is exactly $1$ unit away from side $\overline{AB}$. Compute the distance from point $P$ to side $\overline{BC}$.
+\frac{8}{3}, 4, \frac{16}{3}, \frac{61}{8}
+
+6. Given that a real number $x$ satisfies the equation $(x-4)^2 + (x-1)^2 = 13$, compute the value of $(x-2)(x-3)$.
+2, 10, 4, 8, other
+
+7. A circular stained-glass window of radius $10$ meters has a rectangular clear glass pane inscribed within it. Given that the silver framing around the perimeter of the rectangle has a length of 56 meters, compute the area of the rectangular pane, in square meters.
+384, 192, 196, 1368
+
+8. The energy expenditure $E$ of a robotic rover at coordinates $(x, y)$ is given by the equation $E = 2x^2 + 2y^2 - 12x + 16y + 50$. Given that the rover rests at the exact point where its energy expenditure is minimized compute the product of the coordinates of this point
+12, -48, -192, -1
+
+9. A spaceship's airlock requires a three-digit passcode using the digits $0$ through $9$, inclusive. The captain forgot the passcode but remembers that the sum of the three digits in the code is exactly $3$. Compute the maximum number of incorrect codes the captain might have to try before the airlock opens.
+84, 5, 9, 2
+
+10. In $\triangle ABC$, the length of side $\overline{AB}$ is $12$, the length of side $\overline{BC}$ is $16$, and the length of side $\overline{CA}$ is $18$. Point $D$ lies on side $\overline{BC}$ such that the measures of angles $\overline{BAD}$ and $\overline{ACD}$ are equal. Compute the length of segment $\overline{BD}$.
+7, \frac{27}{2}, 7, \frac{16}{25}
+
+11. Given that the positive integers $n$ and $n$ satisfy the equation $mn - 4m + 3n = 45$, compute the sum of all possible values of $m$
+38, 60, 36, 12
+
+12. Compute the sum of all positive integers $n$ such that the value of the expression $n^2 + 4n + 7$ divides the value of the expression $n^3 + 4n^2 + 7n + 84$
+10, 11, 224, 124
+
+13. For positive integers $a$ and $b$, the quadratic equations $x^2 - ax + 12 = 0$ and $x^2 - bx + 27 = 0$  have a common positive root $r$. Given that the other roots of these two equations differ by exactly $5$, compute the value of $ab$.
+19, 324, 364, \frac{1924}{25}
+
+14. In $\triangle ABC$, angle $A$ has a measure of $90^\circ$, and the lengths of legs $\overline{AB}$ and $\overline{AC}$ are $20$ and $21$, respectively. The incircle of $\triangle ABC$ is tangent to hypotenuse $\overline{BC}$ at point $T$, and the altitude from vertex $A$ intersects $\overline{BC}$ at point $H$. Compute the length of segment $\overline{TH}$.
+
+15. A rabbit wants to hop up a staircase with exactly $8$ steps. Each hope is either $1$ step or $2$ steps, but the rabbit refuses to make two $2$-step hops in a row. Compute thte total number of different hop sequences possible.
+
+16. For a positive integer $k$, the function $s(k)$ represents the sum of the digits of $k$, and the function $f$ is defined by the equation $f(k) = s(2k) - s(k)$. When $100 \le k \le 999$, the function $f(k)$ attains its unique minimum value at $k=X$ and its unique maximum value at $k=Y$. Compute the value of $X + Y$.
